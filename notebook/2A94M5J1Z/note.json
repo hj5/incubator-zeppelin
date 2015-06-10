@@ -22,14 +22,15 @@
       "jobName": "paragraph_1423836981412_-1007008116",
       "id": "20150213-231621_168813393",
       "result": {
-        "code": "SUCCESS",
-        "type": "HTML",
-        "msg": "\u003ch1\u003ezeppelin-poc：\u003c/h1\u003e\n\u003ch4\u003e各种数据源数据接入：spark、hive、mysql、oracle、greenplum等.\u003c/h4\u003e\n\u003ch4\u003e标准SQL.\u003c/h4\u003e\n\u003ch4\u003e交互式数据分析.\u003c/h4\u003e\n\u003chr /\u003e\n\u003ch4\u003e模板引擎支持：\u003ca href\u003d\"#\"\u003e中航信\u003c/a\u003e\u003c/h4\u003e\n\u003ch4\u003e执行shell脚本.\u003c/h4\u003e\n\u003ch4\u003e开发语言实时编译执行\u003c/h4\u003e\n"
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "Interpreter md not found"
       },
       "dateCreated": "Feb 13, 2015 11:16:21 PM",
       "dateStarted": "Jun 4, 2015 1:27:49 PM",
       "dateFinished": "Jun 4, 2015 1:27:50 PM",
-      "status": "FINISHED",
+      "status": "ERROR",
+      "errorMessage": "org.apache.zeppelin.notebook.Note.run(Note.java:269)\norg.apache.zeppelin.socket.NotebookServer.runParagraph(NotebookServer.java:531)\norg.apache.zeppelin.socket.NotebookServer.onMessage(NotebookServer.java:119)\norg.java_websocket.server.WebSocketServer.onWebsocketMessage(WebSocketServer.java:469)\norg.java_websocket.WebSocketImpl.decodeFrames(WebSocketImpl.java:368)\norg.java_websocket.WebSocketImpl.decode(WebSocketImpl.java:157)\norg.java_websocket.server.WebSocketServer$WebSocketWorker.run(WebSocketServer.java:657)\n",
       "progressUpdateIntervalMs": 500
     },
     {
