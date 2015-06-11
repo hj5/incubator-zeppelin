@@ -68,6 +68,17 @@ ZEPPELIN_PID="${ZEPPELIN_PID_DIR}/zeppelin-interpreter-${INTERPRETER_ID}-${ZEPPE
 ZEPPELIN_LOGFILE="${ZEPPELIN_LOG_DIR}/zeppelin-interpreter-${INTERPRETER_ID}-${ZEPPELIN_IDENT_STRING}-${HOSTNAME}.log"
 JAVA_INTP_OPTS+=" -Dzeppelin.log.file=${ZEPPELIN_LOGFILE}"
 
+DEBUG_PORT=$(($PORT+1))
+echo $DEBUG_PORT
+DEBUG_JAVA_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=${DEBUG_PORT}"
+JAVA_INTP_OPTS+=" $DEBUG_JAVA_OPTS"
+#PATH+= ":/usr/local/bin/"
+echo $CLASSPATH
+echo ${ZEPPELIN_RUNNER}
+echo $JAVA_INTP_OPTS
+echo $ZEPPELIN_CLASSPATH
+echo $PATH
+
 if [[ ! -d "${ZEPPELIN_LOG_DIR}" ]]; then
   echo "Log dir doesn't exist, create ${ZEPPELIN_LOG_DIR}"
   $(mkdir -p "${ZEPPELIN_LOG_DIR}")

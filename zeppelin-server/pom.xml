@@ -347,6 +347,10 @@
             <exclude>**/metastore_db/</exclude>
             <exclude>**/README.md</exclude>
             <exclude>src/test/java/com/webautomation/*</exclude>
+            <exclude>.cache-main</exclude>
+            <exclude>.cache-tests</exclude>
+            <exclude>**/data/**</exclude>
+            <exclude>hotspot.log</exclude>
           </excludes>
         </configuration>
       </plugin>
