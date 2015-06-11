@@ -73,3 +73,5 @@ auto-save-list
 tramp
 .\#*
 *.swp
+
+spark/dependency-reduced-pom.xml
