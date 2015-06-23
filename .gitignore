@@ -75,11 +75,3 @@ tramp
 *.swp
 
 spark/dependency-reduced-pom.xml
-
-flink/.cache-main
-
-flink/.cache-tests
-
-zeppelin-server/.cache-main
-
-zeppelin-server/.cache-tests
