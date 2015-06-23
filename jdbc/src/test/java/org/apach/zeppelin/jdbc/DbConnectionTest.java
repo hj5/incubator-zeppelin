@@ -19,6 +19,7 @@
 package org.apach.zeppelin.jdbc;
 
 import org.apache.zeppelin.interpreter.InterpreterResult;
+import org.apache.zeppelin.jdbc.AllDBConnection;
 import org.apache.zeppelin.jdbc.MysqlConnection;
 import org.apache.zeppelin.jdbc.OracleConnection;
 import org.junit.Test;
@@ -52,16 +53,29 @@ public class DbConnectionTest {
 	}
 	
 	@Test
-  public void testOracleZhx() {
-    String port = "1521:orcl";
-    String host = "10.6.109.61";
-    String user = "jupiter";
-    String passwd = "jupiter";
-    OracleConnection conn = new OracleConnection(host, port, user, passwd);
-    conn.open();
-    String sql = "select * from bank";
-    InterpreterResult r = conn.executeSql(sql);
-    System.out.println(r.message());
-  }
+	public void testOracleZhx() {
+		String port = "1521:orcl";
+		String host = "10.6.109.61";
+		String user = "jupiter";
+		String passwd = "jupiter";
+		OracleConnection conn = new OracleConnection(host, port, user, passwd);
+		conn.open();
+		String sql = "select * from bank";
+		InterpreterResult r = conn.executeSql(sql);
+		System.out.println(r.message());
+	}
+	
+	@Test
+	public void testImpala() {
+		String url = "jdbc:hive2://192.168.11.153:21050/;auth=noSasl";
+		String driver = "org.apache.hive.jdbc.HiveDriver";
+		String user = "";
+		String passwd = "";
+		AllDBConnection conn = new AllDBConnection(driver, url, user, passwd);
+		conn.open();
+		String sql = "select * from test";
+		InterpreterResult r = conn.executeSql(sql);
+		System.out.println(r.message());
+	}
 
 }

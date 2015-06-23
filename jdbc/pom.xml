@@ -32,6 +32,14 @@
     <name>Zeppelin: JDBC interpreter</name>
     <url>http://zeppelin.incubator.apache.org</url>
     
+    <properties>
+		<mysql-version>5.1.22</mysql-version>
+		<oracle-version>11.2.0.3.0</oracle-version>
+		<postgresql-version>9.4-1201-jdbc41</postgresql-version>
+        <cdh.hive.version>0.13.1</cdh.hive.version>
+        <cdh.hadoop.version>2.5.0</cdh.hadoop.version>
+	</properties>
+    
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -65,22 +73,34 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.22</version>
+            <version>${mysql-version}</version>
         </dependency>
         
         <dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0.3.0</version>
+			<version>${oracle-version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>9.4-1201-jdbc41</version>
+			<version>${postgresql-version}</version>
 		</dependency>
 		
+        <!-- impala start -->
+		<dependency>
+			<groupId>org.apache.hive</groupId>
+			<artifactId>hive-jdbc</artifactId>
+			<version>${cdh.hive.version}</version>
+		</dependency>
 
+		<dependency>
+  			<groupId>org.apache.hadoop</groupId>
+  			<artifactId>hadoop-common</artifactId>
+  			<version>${cdh.hadoop.version}</version>
+		</dependency>
+		<!-- impala end -->
         
     </dependencies>
     

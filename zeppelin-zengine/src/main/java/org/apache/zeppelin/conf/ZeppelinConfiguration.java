@@ -391,6 +391,7 @@ public class ZeppelinConfiguration extends XMLConfiguration {
         + "org.apache.zeppelin.jdbc.MysqlInterpreter,"
         + "org.apache.zeppelin.jdbc.OracleInterpreter,"
         + "org.apache.zeppelin.jdbc.PgInterpreter,"
+        + "org.apache.zeppelin.jdbc.ImpalaInterpreter,"
         + "org.apache.zeppelin.ignite.IgniteInterpreter,"
         + "org.apache.zeppelin.ignite.IgniteSqlInterpreter,"
         + "org.apache.zeppelin.hive.HiveInterpreter,"
