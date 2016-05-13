@@ -55,6 +55,10 @@ public class NoteInterpreterLoader {
     return factory.getNoteInterpreterSettingBinding(noteId);
   }
 
+  /**
+   * 根据noteid获取note页面所有interpreter的InterpreterSetting
+   * @return 元素是InterpreterSetting的List
+   */
   public List<InterpreterSetting> getInterpreterSettings() {
     List<String> interpreterSettingIds = factory.getNoteInterpreterSettingBinding(noteId);
     LinkedList<InterpreterSetting> settings = new LinkedList<InterpreterSetting>();
@@ -72,6 +76,11 @@ public class NoteInterpreterLoader {
     return settings;
   }
 
+  /**
+   * 获取Interpreter实例
+   * @param replName
+   * @return LazyOpenInterpreter或ClassLoaderInterpreter
+   */
   public Interpreter get(String replName) {
     List<InterpreterSetting> settings = getInterpreterSettings();
 

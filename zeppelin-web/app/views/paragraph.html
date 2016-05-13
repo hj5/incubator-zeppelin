@@ -406,7 +406,7 @@ limitations under the License.
       </span>
       <ul class="dropdown-menu" role="menu" style="width:200px;">
         <li>
-          <a class="fa fa-arrows-h dropdown"> Width
+          <a class="fa fa-arrows-h dropdown"> 宽度
           <form style="display:inline; margin-left:5px;">
             <select ng-model="paragraph.config.colWidth"
                     class="selectpicker"
@@ -417,33 +417,33 @@ limitations under the License.
         </li>
         <li>
           <a class="icon-arrow-up" style="cursor:pointer"
-             ng-click="moveUp()"> Move Up</a>
+             ng-click="moveUp()"> 上移任务</a>
         </li>
         <li>
           <a class="icon-arrow-down" style="cursor:pointer"
-             ng-click="moveDown()"> Move Down</a>
+             ng-click="moveDown()"> 下移任务</a>
         </li>
         <li>
           <a class="icon-plus" style="cursor:pointer"
-             ng-click="insertNew()"> Insert New</a>
+             ng-click="insertNew()"> 插入新任务</a>
         </li>
         <li>
           <!-- paragraph handler -->
           <a class="fa fa-font" style="cursor:pointer"
              ng-click="hideTitle()"
-             ng-show="paragraph.config.title"> Hide title</a>
+             ng-show="paragraph.config.title"> 隐藏标题</a>
           <a class="fa fa-font" style="cursor:pointer"
              ng-click="showTitle()"
-             ng-show="!paragraph.config.title"> Show title</a>
+             ng-show="!paragraph.config.title"> 展示标题</a>
         </li>
 
         <li><a class="icon-share-alt" style="cursor:pointer"
-               ng-click="goToSingleParagraph()"> Link this paragraph</a>
+               ng-click="goToSingleParagraph()"> 生成引用链接</a>
         </li>
         <li>
           <!-- remove paragraph -->
           <a class="fa fa-times" style="cursor:pointer"
-             ng-click="removeParagraph()"> Remove</a>
+             ng-click="removeParagraph()"> 删除</a>
         </li>
       </ul>
     </span>

@@ -48,7 +48,7 @@ limitations under the License.
     <link rel="stylesheet" href="styles/simple-line-icons.css">
     <link rel="stylesheet" href="styles/custom-font.css">
     <!-- endbuild -->
-    <link rel="stylesheet" ng-href="styles/looknfeel/{{looknfeel}}.css">
+    <link rel="stylesheet" ng-href="styles/looknfeel/{{looknfeel[0]}}.css">
   </head>
   <body ng-class="{'bodyAsIframe': asIframe}" >
     <!--[if lt IE 7]>
@@ -62,15 +62,15 @@ limitations under the License.
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#/"><img style="margin-top: -7px;s" src="images/zepLogoW.png" width="50" alt="I'm zeppelin"> Zeppelin</a>
+          <a class="navbar-brand" href="#/"><img style="margin-top: -7px;s" src="images/zepLogoW.png" width="50" alt="I'm rose"> Rose</a>
         </div>
 
         <div class="collapse navbar-collapse" ng-controller="NavCtrl">
           <ul class="nav navbar-nav">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle">Notebook <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle">工作台 <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="javascript:void(0);" ng-click="createNewNote()"><i class="fa fa-plus"></i> Create new note</a></li>
+                <li><a href="javascript:void(0);" ng-click="createNewNote()"><i class="fa fa-plus"></i> 创建工作台</a></li>
                 <li class="divider"></li>
                 <div id="notebook-list" class="scrollbar-container">
                   <li ng-repeat="note in notes track by $index" ng-class="{'active' : isActive(note.id)}"><a href="#/notebook/{{note.id}}">{{note.name || 'Note ' + note.id}} </a></li>
@@ -78,14 +78,14 @@ limitations under the License.
               </ul>
             </li>
             <li>
-              <a href="#/interpreter">Interpreter</a>
+              <a href="#/interpreter">解释器</a>
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right" style="margin-top:10px; margin-right:5px;">            
             <li class="server-status">
                 <i class="fa fa-circle" ng-class="{'server-connected':connected, 'server-disconnected':!connected }"></i>
-                <span ng-show="connected">Connected</span>
-                <span ng-show="!connected">Disconnected</span>
+                <span ng-show="connected">已连接</span>
+                <span ng-show="!connected">连接已断开</span>
             </li>
           </ul>
         </div>

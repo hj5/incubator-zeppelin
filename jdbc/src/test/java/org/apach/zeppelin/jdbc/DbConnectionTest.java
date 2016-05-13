@@ -67,13 +67,15 @@ public class DbConnectionTest {
 	
 	@Test
 	public void testImpala() {
-		String url = "jdbc:hive2://192.168.11.153:21050/;auth=noSasl";
+		String url = "jdbc:hive2://172.19.1.148:21050/;auth=noSasl;user=hadoop;password=hadoop123";
 		String driver = "org.apache.hive.jdbc.HiveDriver";
-		String user = "";
-		String passwd = "";
+		String user = "hadoop";
+		String passwd = "hadoop123";
 		AllDBConnection conn = new AllDBConnection(driver, url, user, passwd);
 		conn.open();
-		String sql = "select * from test";
+		String sql = "select * from test.a";
+//		sql = "show tables";
+		sql = "create table test.p (id int,name string,no int)";
 		InterpreterResult r = conn.executeSql(sql);
 		System.out.println(r.message());
 	}

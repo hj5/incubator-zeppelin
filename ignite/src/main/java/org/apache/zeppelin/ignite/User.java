@@ -14,26 +14,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.zeppelin.ignite;
 
-package org.apache.zeppelin.notebook.repo;
+import java.io.Serializable;
 
-import java.io.IOException;
-import java.util.List;
-
-import org.apache.zeppelin.notebook.Note;
-import org.apache.zeppelin.notebook.NoteInfo;
+import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 /**
- * Notebook repository (persistence layer) abstraction
+ * Apache Ignite TestModel
  */
-public interface NotebookRepo {
-  public List<NoteInfo> list() throws IOException;
-  public Note get(String noteId) throws IOException;
-  /**
-   * 持久化该note的所有paragraph到server端：目前实现是持久化到磁盘文件中（notebook目录）
-   * @param note
-   * @throws IOException
-   */
-  public void save(Note note) throws IOException;
-  public void remove(String noteId) throws IOException;
+public class User implements Serializable {
+  @QuerySqlField
+  private String name;
+
+  @QuerySqlField
+  private int age;
+
+  public User(String name, int age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public void setAge(int age) {
+    this.age = age;
+  }
 }

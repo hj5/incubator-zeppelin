@@ -244,6 +244,11 @@ public class NotebookServer extends WebSocketServer implements
     }
   }
 
+  /**
+   * 更新数据给所有的client
+   * @param noteId
+   * @param m
+   */
   private void broadcast(String noteId, Message m) {
     synchronized (noteSocketMap) {
       List<WebSocket> socketLists = noteSocketMap.get(noteId);

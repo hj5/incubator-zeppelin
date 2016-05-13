@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,25 +15,21 @@
  * limitations under the License.
  */
 
-package org.apache.zeppelin.notebook.repo;
+package ignite;
 
-import java.io.IOException;
-import java.util.List;
-
-import org.apache.zeppelin.notebook.Note;
-import org.apache.zeppelin.notebook.NoteInfo;
+import org.apache.ignite.*;
 
 /**
- * Notebook repository (persistence layer) abstraction
+ * Starts up an empty node with example compute configuration.
  */
-public interface NotebookRepo {
-  public List<NoteInfo> list() throws IOException;
-  public Note get(String noteId) throws IOException;
-  /**
-   * 持久化该note的所有paragraph到server端：目前实现是持久化到磁盘文件中（notebook目录）
-   * @param note
-   * @throws IOException
-   */
-  public void save(Note note) throws IOException;
-  public void remove(String noteId) throws IOException;
+public class ExampleNodeStartup {
+    /**
+     * Start up an empty node with example compute configuration.
+     *
+     * @param args Command line arguments, none required.
+     * @throws IgniteException If failed.
+     */
+    public static void main(String[] args) throws IgniteException {
+        Ignition.start("config/ignite.xml");
+    }
 }

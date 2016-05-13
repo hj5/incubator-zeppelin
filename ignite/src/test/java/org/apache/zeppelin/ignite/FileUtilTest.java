@@ -14,26 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.zeppelin.ignite;
 
-package org.apache.zeppelin.notebook.repo;
 
-import java.io.IOException;
-import java.util.List;
+public class FileUtilTest {
 
-import org.apache.zeppelin.notebook.Note;
-import org.apache.zeppelin.notebook.NoteInfo;
+  public static void main(String[] args) {
+    // 创建目录
+    String dirName = "tempdir";
+    FileUtil.createDir(dirName);
+    // 创建文件
+    String fileName = dirName + "/JavaRuntimetempFile.java";
+    FileUtil.createFile(fileName);
+    String fileName1 = dirName + "/JavaRuntimetempFile1.class";
+    FileUtil.createFile(fileName1);
+    FileUtil.delAllFile(dirName);
+  }
 
-/**
- * Notebook repository (persistence layer) abstraction
- */
-public interface NotebookRepo {
-  public List<NoteInfo> list() throws IOException;
-  public Note get(String noteId) throws IOException;
-  /**
-   * 持久化该note的所有paragraph到server端：目前实现是持久化到磁盘文件中（notebook目录）
-   * @param note
-   * @throws IOException
-   */
-  public void save(Note note) throws IOException;
-  public void remove(String noteId) throws IOException;
 }

@@ -1,7 +1,7 @@
 {
   "paragraphs": [
     {
-      "text": "%md\n#zeppelin-poc： \n####各种数据源数据接入：spark、hive、mysql、oracle、greenplum等.\n####标准SQL.\n####交互式数据分析.\n-----------------------------------------------------------------\n####模板引擎支持：\u003ca href\u003d\"#\"\u003e中航信\u003c/a\u003e\n####执行shell脚本.\n####开发语言实时编译执行",
+      "text": "%md\n#Rose： \n##各种数据源数据接入：spark、hive、mysql、oracle、greenplum等.\n#标准SQL.\n####交互式数据分析.\n-----------------------------------------------------------------\n####模板引擎支持：\u003ca href\u003d\"#\"\u003e链接\u003c/a\u003e\n####执行shell脚本.\n####开发语言实时编译执行",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -13,7 +13,9 @@
           "groups": [],
           "scatter": {}
         },
-        "editorHide": false
+        "editorHide": false,
+        "title": false,
+        "tableHide": false
       },
       "settings": {
         "params": {},
@@ -24,17 +26,17 @@
       "result": {
         "code": "SUCCESS",
         "type": "HTML",
-        "msg": "\u003ch1\u003ezeppelin-poc：\u003c/h1\u003e\n\u003ch4\u003e各种数据源数据接入：spark、hive、mysql、oracle、greenplum等.\u003c/h4\u003e\n\u003ch4\u003e标准SQL.\u003c/h4\u003e\n\u003ch4\u003e交互式数据分析.\u003c/h4\u003e\n\u003chr /\u003e\n\u003ch4\u003e模板引擎支持：\u003ca href\u003d\"#\"\u003e中航信\u003c/a\u003e\u003c/h4\u003e\n\u003ch4\u003e执行shell脚本.\u003c/h4\u003e\n\u003ch4\u003e开发语言实时编译执行\u003c/h4\u003e\n"
+        "msg": "\u003ch1\u003eRose：\u003c/h1\u003e\n\u003ch2\u003e各种数据源数据接入：spark、hive、mysql、oracle、greenplum等.\u003c/h2\u003e\n\u003ch1\u003e标准SQL.\u003c/h1\u003e\n\u003ch4\u003e交互式数据分析.\u003c/h4\u003e\n\u003chr /\u003e\n\u003ch4\u003e模板引擎支持：\u003ca href\u003d\"#\"\u003e链接\u003c/a\u003e\u003c/h4\u003e\n\u003ch4\u003e执行shell脚本.\u003c/h4\u003e\n\u003ch4\u003e开发语言实时编译执行\u003c/h4\u003e\n"
       },
       "dateCreated": "Feb 13, 2015 11:16:21 PM",
-      "dateStarted": "Jun 17, 2015 5:16:03 PM",
-      "dateFinished": "Jun 17, 2015 5:16:06 PM",
+      "dateStarted": "Sep 17, 2015 11:08:12 AM",
+      "dateFinished": "Sep 17, 2015 11:08:12 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "title": "Prepare data",
-      "text": "import sys.process._\n//you will need \u0027wget\u0027 tool to download\n\"/usr/local/bin/wget http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank.zip\" !\n\"mkdir data\" !\n\"unzip bank.zip -d data\" !\n\"rm bank.zip\" !",
+      "text": "import sys.process._\n//you will need \u0027wget\u0027 tool to download\n//\"/usr/local/bin/wget http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank.zip\" !\n\"rm -rf data\"!\n\"mkdir data\" !\n\"unzip bank.zip -d data\" !\n//\"rm bank.zip\" !",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -46,7 +48,9 @@
           "groups": [],
           "scatter": {}
         },
-        "title": true
+        "title": true,
+        "tableHide": false,
+        "editorHide": false
       },
       "settings": {
         "params": {},
@@ -57,11 +61,11 @@
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "import sys.process._\nwarning: there were 1 feature warning(s); re-run with -feature for details\nres1: Int \u003d 0\nwarning: there were 1 feature warning(s); re-run with -feature for details\nres2: Int \u003d 0\nwarning: there were 1 feature warning(s); re-run with -feature for details\nres3: Int \u003d 0\nwarning: there were 1 feature warning(s); re-run with -feature for details\nres4: Int \u003d 0\n"
+        "msg": "import sys.process._\nwarning: there were 1 feature warning(s); re-run with -feature for details\nres36: Int \u003d 0\nwarning: there were 1 feature warning(s); re-run with -feature for details\nres37: Int \u003d 0\nwarning: there were 1 feature warning(s); re-run with -feature for details\nres38: Int \u003d 0\n"
       },
       "dateCreated": "Dec 4, 2014 10:28:55 AM",
-      "dateStarted": "Jun 3, 2015 2:30:23 PM",
-      "dateFinished": "Jun 3, 2015 2:30:42 PM",
+      "dateStarted": "Sep 2, 2015 7:05:23 PM",
+      "dateFinished": "Sep 2, 2015 7:05:26 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -79,7 +83,9 @@
           "groups": [],
           "scatter": {}
         },
-        "title": true
+        "title": true,
+        "tableHide": false,
+        "editorHide": false
       },
       "settings": {
         "params": {},
@@ -90,11 +96,11 @@
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "import sys.process._\nsqlContext: org.apache.spark.sql.SQLContext \u003d org.apache.spark.sql.SQLContext@3edea654\nwarning: there were 1 feature warning(s); re-run with -feature for details\nzeppelinHome: String \u003d /Users/hj/Documents/zeppelin/zeppelin_lebron-hj/incubator-zeppelin\nbankText: org.apache.spark.rdd.RDD[String] \u003d file:///Users/hj/Documents/zeppelin/zeppelin_lebron-hj/incubator-zeppelin/data/bank-full.csv MapPartitionsRDD[22] at textFile at \u003cconsole\u003e:34\ndefined class Bank\nbank: org.apache.spark.sql.DataFrame \u003d [age: int, job: string, marital: string, education: string, balance: int]\n"
+        "msg": "import sys.process._\nsqlContext: org.apache.spark.sql.SQLContext \u003d org.apache.spark.sql.SQLContext@737ff937\nwarning: there were 1 feature warning(s); re-run with -feature for details\nzeppelinHome: String \u003d /Users/hj/Documents/zeppelin/github/incubator-zeppelin/bin\nbankText: org.apache.spark.rdd.RDD[String] \u003d file:///Users/hj/Documents/zeppelin/github/incubator-zeppelin/bin/data/bank-full.csv MapPartitionsRDD[76] at textFile at \u003cconsole\u003e:46\ndefined class Bank\nbank: org.apache.spark.sql.DataFrame \u003d [age: int, job: string, marital: string, education: string, balance: int]\n"
       },
       "dateCreated": "Feb 10, 2015 1:52:59 AM",
-      "dateStarted": "Jun 4, 2015 3:09:28 PM",
-      "dateFinished": "Jun 4, 2015 3:09:30 PM",
+      "dateStarted": "Sep 2, 2015 7:05:33 PM",
+      "dateFinished": "Sep 2, 2015 7:05:36 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -103,7 +109,7 @@
       "config": {
         "colWidth": 4.0,
         "graph": {
-          "mode": "table",
+          "mode": "multiBarChart",
           "height": 300.0,
           "optionOpen": false,
           "keys": [
@@ -133,7 +139,9 @@
               "aggr": "sum"
             }
           }
-        }
+        },
+        "tableHide": false,
+        "editorHide": false
       },
       "settings": {
         "params": {},
@@ -147,8 +155,8 @@
         "msg": "age\tvalue\n18\t12\n19\t35\n20\t50\n21\t79\n22\t129\n23\t202\n24\t302\n25\t527\n26\t805\n27\t909\n28\t1038\n29\t1185\n"
       },
       "dateCreated": "Feb 10, 2015 1:53:02 AM",
-      "dateStarted": "Jun 4, 2015 3:09:50 PM",
-      "dateFinished": "Jun 4, 2015 3:09:52 PM",
+      "dateStarted": "Sep 2, 2015 7:05:44 PM",
+      "dateFinished": "Sep 2, 2015 7:05:45 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -157,7 +165,7 @@
       "config": {
         "colWidth": 4.0,
         "graph": {
-          "mode": "stackedAreaChart",
+          "mode": "multiBarChart",
           "height": 300.0,
           "optionOpen": false,
           "keys": [
@@ -187,11 +195,14 @@
               "aggr": "sum"
             }
           }
-        }
+        },
+        "title": false,
+        "tableHide": false,
+        "editorHide": false
       },
       "settings": {
         "params": {
-          "maxAge": "35"
+          "maxAge": "40"
         },
         "forms": {
           "maxAge": {
@@ -206,11 +217,11 @@
       "result": {
         "code": "SUCCESS",
         "type": "TABLE",
-        "msg": "age\tvalue\n18\t12\n19\t35\n20\t50\n21\t79\n22\t129\n23\t202\n24\t302\n25\t527\n26\t805\n27\t909\n28\t1038\n29\t1185\n30\t1757\n31\t1996\n32\t2085\n33\t1972\n34\t1930\n"
+        "msg": "age\tvalue\n18\t12\n19\t35\n20\t50\n21\t79\n22\t129\n23\t202\n24\t302\n25\t527\n26\t805\n27\t909\n28\t1038\n29\t1185\n30\t1757\n31\t1996\n32\t2085\n33\t1972\n34\t1930\n35\t1894\n36\t1806\n37\t1696\n38\t1466\n39\t1487\n"
       },
       "dateCreated": "Feb 12, 2015 2:54:04 PM",
-      "dateStarted": "Jun 3, 2015 2:32:10 PM",
-      "dateFinished": "Jun 3, 2015 2:32:12 PM",
+      "dateStarted": "Sep 2, 2015 11:22:04 AM",
+      "dateFinished": "Sep 2, 2015 11:22:05 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -219,7 +230,7 @@
       "config": {
         "colWidth": 4.0,
         "graph": {
-          "mode": "table",
+          "mode": "multiBarChart",
           "height": 300.0,
           "optionOpen": false,
           "keys": [
@@ -249,7 +260,10 @@
               "aggr": "sum"
             }
           }
-        }
+        },
+        "title": false,
+        "tableHide": false,
+        "editorHide": false
       },
       "settings": {
         "params": {
@@ -282,39 +296,8 @@
         "msg": "age\tvalue\n18\t12\n19\t35\n20\t47\n21\t74\n22\t120\n23\t175\n24\t248\n25\t423\n26\t615\n27\t658\n28\t697\n29\t683\n30\t1012\n31\t1017\n32\t941\n33\t746\n34\t650\n35\t631\n36\t538\n37\t453\n38\t394\n39\t346\n40\t257\n41\t241\n42\t218\n43\t183\n44\t170\n45\t146\n46\t130\n47\t100\n48\t124\n49\t101\n50\t76\n51\t72\n52\t62\n53\t71\n54\t55\n55\t54\n56\t45\n57\t38\n58\t35\n59\t36\n60\t27\n61\t5\n63\t2\n66\t5\n67\t3\n68\t4\n69\t2\n70\t1\n71\t1\n72\t5\n73\t2\n77\t1\n83\t2\n86\t1\n"
       },
       "dateCreated": "Feb 13, 2015 11:04:22 PM",
-      "dateStarted": "May 27, 2015 11:39:17 AM",
-      "dateFinished": "May 27, 2015 11:39:19 AM",
-      "status": "FINISHED",
-      "progressUpdateIntervalMs": 500
-    },
-    {
-      "text": "%md\n## Congratulations, it\u0027s done.\n##### You can create your own notebook in \u0027Notebook\u0027 menu. Good luck!",
-      "config": {
-        "colWidth": 12.0,
-        "graph": {
-          "mode": "table",
-          "height": 300.0,
-          "optionOpen": false,
-          "keys": [],
-          "values": [],
-          "groups": [],
-          "scatter": {}
-        }
-      },
-      "settings": {
-        "params": {},
-        "forms": {}
-      },
-      "jobName": "paragraph_1423836268492_216498320",
-      "id": "20150213-230428_1231780373",
-      "result": {
-        "code": "SUCCESS",
-        "type": "HTML",
-        "msg": "\u003ch2\u003eCongratulations, it\u0027s done.\u003c/h2\u003e\n\u003ch5\u003eYou can create your own notebook in \u0027Notebook\u0027 menu. Good luck!\u003c/h5\u003e\n"
-      },
-      "dateCreated": "Feb 13, 2015 11:04:28 PM",
-      "dateStarted": "May 29, 2015 10:39:34 AM",
-      "dateFinished": "May 29, 2015 10:39:34 AM",
+      "dateStarted": "Sep 2, 2015 11:22:09 AM",
+      "dateFinished": "Sep 2, 2015 11:22:11 AM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -324,18 +307,19 @@
         "params": {},
         "forms": {}
       },
-      "jobName": "paragraph_1432867177196_1272621319",
-      "id": "20150529-103937_1845441817",
-      "dateCreated": "May 29, 2015 10:39:37 AM",
+      "jobName": "paragraph_1440471431004_379582977",
+      "id": "20150825-105711_1212573627",
+      "dateCreated": "Aug 25, 2015 10:57:11 AM",
       "status": "READY",
       "progressUpdateIntervalMs": 500
     }
   ],
-  "name": "Zeppelin Tutorial",
+  "name": "Rose",
   "id": "2A94M5J1Z",
   "angularObjects": {},
   "config": {
-    "looknfeel": "default"
+    "looknfeel": "default",
+    "looknfeelname": "默认模式"
   },
   "info": {}
 }

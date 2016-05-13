@@ -29,7 +29,7 @@ angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $ro
   $scope.editorToggled = false;
   $scope.tableToggled = false;
   $scope.viewOnly = false;
-  $scope.looknfeelOption = [ 'default', 'simple', 'report'];
+  $scope.looknfeelOption = [['default','默认模式'],['simple','\u7b80\u7ea6\u6a21\u5f0f'],['report','\u62a5\u8868\u6a21\u5f0f']];
   $scope.cronOption = [
     {name: 'None', value : undefined},
     {name: '1m', value: '0 0/1 * * * ?'},
@@ -69,7 +69,7 @@ angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $ro
   /** Remove the note and go back tot he main page */
   /** TODO(anthony): In the nearly future, go back to the main page and telle to the dude that the note have been remove */
   $scope.removeNote = function(noteId) {
-    var result = confirm('Do you want to delete this notebook?');
+    var result = confirm('\u4f60\u786e\u5b9a\u8981\u5220\u9664\u8fd9\u4e2a\u5de5\u4f5c\u53f0\u5417?');
     if (result) {
       $rootScope.$emit('sendNewEvent', {op: 'DEL_NOTE', data: {id: noteId}});
       $location.path('/#');
@@ -77,7 +77,7 @@ angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $ro
   };
 
   $scope.runNote = function() {
-    var result = confirm('Run all paragraphs?');
+    var result = confirm('\u8fd0\u884c\u6240\u6709\u4efb\u52a1?');
     if (result) {
       $scope.$broadcast('runParagraph');
     }
@@ -130,7 +130,8 @@ angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $ro
   };
 
   $scope.setLookAndFeel = function(looknfeel) {
-    $scope.note.config.looknfeel = looknfeel;
+    $scope.note.config.looknfeel = looknfeel[0];
+    $scope.note.config.looknfeelname=looknfeel[1];
     $scope.setConfig();
   };
 
@@ -179,10 +180,11 @@ angular.module('zeppelinWebApp').controller('NotebookCtrl', function($scope, $ro
   var initializeLookAndFeel = function() {
     if (!$scope.note.config.looknfeel) {
       $scope.note.config.looknfeel = 'default';
+      $scope.note.config.looknfeelname='默认模式';
     } else {
-      $scope.viewOnly = $scope.note.config.looknfeel === 'report' ? true : false;
+      $scope.viewOnly = ($scope.note.config.looknfeel === 'report' ? true : false);
     }
-    $rootScope.$emit('setLookAndFeel', $scope.note.config.looknfeel);
+    $rootScope.$emit('setLookAndFeel', [$scope.note.config.looknfeel,$scope.note.config.looknfeelname]);
   };
 
 

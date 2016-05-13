@@ -74,6 +74,7 @@ public class MysqlConnection implements DBConnection {
     } catch ( ClassNotFoundException | SQLException e ) {
       logger.error("Can not open connection", e);
       exceptionOnConnect = e;
+      e.printStackTrace();
     }
   }
 
@@ -83,7 +84,7 @@ public class MysqlConnection implements DBConnection {
       mysqlConnection.close();
       currentStatement.close();
       resultSet.close();
-    } catch ( SQLException e ) {
+    } catch ( Exception e ) {
       logger.error("Can not close connection", e);
     }
 
@@ -144,7 +145,7 @@ public class MysqlConnection implements DBConnection {
       try {
         currentStatement.cancel();
       }
-      catch (SQLException ex) {
+      catch (Exception ex) {
       }
       finally {
         currentStatement = null;

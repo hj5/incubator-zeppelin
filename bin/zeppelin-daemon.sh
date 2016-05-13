@@ -54,6 +54,11 @@ ZEPPELIN_PID="${ZEPPELIN_PID_DIR}/zeppelin-${ZEPPELIN_IDENT_STRING}-${HOSTNAME}.
 ZEPPELIN_MAIN=org.apache.zeppelin.server.ZeppelinServer
 JAVA_OPTS+=" -Dzeppelin.log.file=${ZEPPELIN_LOGFILE}"
 
+#DEBUG_PORT=5555
+#echo "DEBUG_PORT========zeppelin-server=========:${DEBUG_PORT}"
+#DEBUG_JAVA_OPTS=" -Xms2048m -Xmx2048m -Dscala.usejavacp=true -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=${DEBUG_PORT}"
+#JAVA_OPTS+=" $DEBUG_JAVA_OPTS"
+
 # construct classpath
 if [[ -d "${ZEPPELIN_HOME}/zeppelin-interpreter/target/classes" ]]; then
   ZEPPELIN_CLASSPATH+=":${ZEPPELIN_HOME}/zeppelin-interpreter/target/classes"

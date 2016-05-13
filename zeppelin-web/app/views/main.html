@@ -17,16 +17,16 @@ limitations under the License.
   </div>
   <div style="margin-top: -380px;">
     <h1 class="box-heading" id="welcome">
-      Welcome to Zeppelin!
+      欢迎来到Rose!  
     </h1>
-    Zeppelin is web-based notebook that enables interactive data analytics.<br>You can make beautiful data-driven, interactive, collaborative document with SQL, code and even more!<br>
+    Rose是一个基于工作台进行交互数据分析的执行引擎.<br>在这里你可以整合、接入来自多方的数据（hive/Spark/impala/Ignite/Oracle/Mysql等），也<br>可利用SQL/java/scala/python等进行在线编程对数据进行处理，还可以制作美丽直观的数据<br>图表, 并且和它进行动态交互!<br>
 
     <div class="row">
       <div class="col-md-4">
-        <h4>Notebook</h4>
+        <h4>工作台</h4>
 
         <div ng-controller="NavCtrl">
-          <h5><a href="javascript:void(0);" ng-click="createNewNote()" style="text-decoration: none;"><i style="font-size: 15px;" class="icon-notebook"></i> Create new note</a></h5>
+          <h5><a href="javascript:void(0);" ng-click="createNewNote()" style="text-decoration: none;"><i style="font-size: 15px;" class="icon-notebook"></i> 创建工作台</a></h5>
           <ul style="list-style-type: none;">
             <li ng-repeat="note in notes track by $index"><i style="font-size: 10px;" class="icon-doc"></i>
               <a style="text-decoration: none;" href="#/notebook/{{note.id}}">{{note.name || 'Note ' + note.id}}</a>
@@ -34,7 +34,7 @@ limitations under the License.
           </ul>
         </div>
       </div>
-      <div class="col-md-6">
+      <!-- <div class="col-md-6">
         <h4>Help</h4>
         Get started with <a style="text-decoration: none;" href="http://zeppelin.incubator.apache.org/docs/index.html" target="_blank">Zeppelin documentation</a><br>
 
@@ -44,7 +44,7 @@ limitations under the License.
         <a style="text-decoration: none;" href="http://zeppelin.incubator.apache.org/community.html" target="_blank"><i style="font-size: 15px;" class="fa fa-users"></i> Mailing list</a><br>
         <a style="text-decoration: none;" href="https://issues.apache.org/jira/browse/ZEPPELIN" target="_blank"><i style="font-size: 15px;" class="fa fa-bug"></i> Issues tracking</a><br>
         <a style="text-decoration: none;" href="https://github.com/apache/incubator-zeppelin" target="_blank"><i style="font-size: 20px;" class="fa fa-github"></i> Github</a>
-      </div>
+      </div> -->
     </div>
   </div>
   <br/><br/><br/>

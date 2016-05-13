@@ -27,7 +27,7 @@ angular.module('zeppelinWebApp')
   $rootScope.compiledScope = $scope.$new(true, $rootScope);  
   $scope.WebSocketWaitingList = [];
   $scope.connected = false;
-  $scope.looknfeel = 'default';
+  $scope.looknfeel = ['default','默认模式'];
 
   var init = function() {
     $scope.asIframe = (($window.location.href.indexOf('asIframe') > -1) ? true : false);

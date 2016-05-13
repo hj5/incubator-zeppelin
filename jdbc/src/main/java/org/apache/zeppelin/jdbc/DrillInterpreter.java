@@ -30,23 +30,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Impala interpreter for Zeppelin.
+ * Drill interpreter for Zeppelin.
  *
  * @author huangjian
  *
  */
 
-public class ImpalaInterpreter extends Interpreter {
-  Logger logger = LoggerFactory.getLogger(ImpalaInterpreter.class);
+public class DrillInterpreter extends Interpreter {
+  Logger logger = LoggerFactory.getLogger(DrillInterpreter.class);
   int commandTimeOut = 600000;
 
   static {
-    Interpreter.register("impala", ImpalaInterpreter.class.getName());
+    Interpreter.register("drill", DrillInterpreter.class.getName());
   }
 
   DBConnection jdbcConnection;
  
-  public ImpalaInterpreter(Properties property) {
+  public DrillInterpreter(Properties property) {
     super(property);
     Properties currentProperty = getProperty();
     DBConnectionFactory DBFactory = new DBConnectionFactory(currentProperty);
@@ -65,7 +65,7 @@ public class ImpalaInterpreter extends Interpreter {
 
   @Override
   public InterpreterResult interpret(String cmd, InterpreterContext contextInterpreter) {
-    logger.info("Run Impala SQL command '" + cmd + "'");
+    logger.info("Run Drill SQL command '" + cmd + "'");
     return jdbcConnection.executeSql(cmd);
   }
 
@@ -87,7 +87,7 @@ public class ImpalaInterpreter extends Interpreter {
   @Override
   public Scheduler getScheduler() {
     return SchedulerFactory.singleton().createOrGetFIFOScheduler(
-        ImpalaInterpreter.class.getName() + this.hashCode());
+        DrillInterpreter.class.getName() + this.hashCode());
   }
 
   @Override

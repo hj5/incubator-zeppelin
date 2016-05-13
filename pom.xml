@@ -420,6 +420,10 @@
               <exclude>Roadmap.md</exclude>
               <exclude>conf/interpreter.json</exclude>
               <exclude>spark-*-bin*/**</exclude>
+              <exclude>**/.cache-main</exclude>
+              <exclude>**/.cache-tests</exclude>
+              <exclude>**/data/**</exclude>
+              <exclude>**/hotspot.log</exclude>
             </excludes>
           </configuration>
 

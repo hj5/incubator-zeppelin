@@ -23,7 +23,7 @@ import java.util.Random;
 import org.apache.zeppelin.notebook.utility.IdHashes;
 
 /**
- * Interpreter settings
+ * Interpreter settings:对应解释器设置页面的每一项
  */
 public class InterpreterSetting {
   private String id;

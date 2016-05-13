@@ -21,11 +21,11 @@ package org.apache.zeppelin.jdbc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.commons.lang.StringUtils;
+
 import org.apache.zeppelin.interpreter.InterpreterResult;
 import org.apache.zeppelin.interpreter.InterpreterResult.Code;
 
 import java.util.Vector;
-import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -34,44 +34,37 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * OracleConnection
+ * AllDBConnection
  *
  * @author huangjian
  *
  */
 
-public class OracleConnection implements DBConnection {
-  Logger logger = LoggerFactory.getLogger(OracleConnection.class);
+public class CopyOfSingleConnAllDBConnection implements DBConnection {
+  Logger logger = LoggerFactory.getLogger(CopyOfSingleConnAllDBConnection.class);
 
-  String host;
-  String port;
+  String driver;
+  String url;
   String user;
   String passwd;
 
-  public OracleConnection(String host, String port, String user, String passwd) {
-    this.host = host;
-    this.port = port;
+  public CopyOfSingleConnAllDBConnection(String driver, String url, String user, String passwd) {
+    this.driver = driver;
+    this.url = url;
     this.user = user;
     this.passwd = passwd;
   }
 
-  Connection oracleConnection;
+  Connection allDBConnection;
   Exception exceptionOnConnect;
   Statement currentStatement;
   ResultSet resultSet;
 
   @Override
   public void open() {
-    String driver = "oracle.jdbc.driver.OracleDriver";
-    // url = "jdbc:oracle:thin:@localhost:1521:数据库实例";
-    String url = "jdbc:oracle:thin:@";
-    url += host;
-    url += port != "" ? ":" + port : ":1521";
-    // url += "/?user=" + user;
-
     try {
       Class.forName(driver);
-      oracleConnection = DriverManager.getConnection(url, user, passwd);
+      allDBConnection = DriverManager.getConnection(url, user, passwd);
     } catch (ClassNotFoundException | SQLException e) {
       logger.error("Can not open connection", e);
       exceptionOnConnect = e;
@@ -81,14 +74,16 @@ public class OracleConnection implements DBConnection {
   @Override
   public void close() {
     try {
-      oracleConnection.close();
+      allDBConnection.close();
       currentStatement.close();
       resultSet.close();
-    } catch (Exception e) {
+    } catch (SQLException e) {
       logger.error("Can not close connection", e);
+    } catch (Exception e) {
+      logger.error("close connection error", e);
     }
 
-    oracleConnection = null;
+    allDBConnection = null;
     exceptionOnConnect = null;
     currentStatement = null;
     resultSet = null;
@@ -98,9 +93,16 @@ public class OracleConnection implements DBConnection {
   public InterpreterResult executeSql(String sql) {
     try {
       if (exceptionOnConnect != null) {
-        return new InterpreterResult(Code.ERROR, exceptionOnConnect.getMessage());
+        close();
+        open();
+        if (exceptionOnConnect != null) {
+          return new InterpreterResult(Code.ERROR, exceptionOnConnect.getMessage());
+        }
       }
-      currentStatement = oracleConnection.createStatement();
+      if (allDBConnection == null) {
+        open();
+      }
+      currentStatement = allDBConnection.createStatement();
       StringBuilder msg = null;
       if (StringUtils.containsIgnoreCase(sql, "EXPLAIN ")) {
         // return the explain as text, make this visual explain later
@@ -127,7 +129,7 @@ public class OracleConnection implements DBConnection {
         }
       } catch (NullPointerException e) {
 
-      } 
+      }
 
       InterpreterResult rett = new InterpreterResult(Code.SUCCESS, msg.toString());
       return rett;

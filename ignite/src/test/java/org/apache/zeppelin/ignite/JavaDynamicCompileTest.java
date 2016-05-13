@@ -14,26 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.zeppelin.ignite;
 
-package org.apache.zeppelin.notebook.repo;
+import org.apache.ignite.Ignite;
+import org.apache.ignite.Ignition;
 
-import java.io.IOException;
-import java.util.List;
+public class JavaDynamicCompileTest {
 
-import org.apache.zeppelin.notebook.Note;
-import org.apache.zeppelin.notebook.NoteInfo;
 
-/**
- * Notebook repository (persistence layer) abstraction
- */
-public interface NotebookRepo {
-  public List<NoteInfo> list() throws IOException;
-  public Note get(String noteId) throws IOException;
-  /**
-   * 持久化该note的所有paragraph到server端：目前实现是持久化到磁盘文件中（notebook目录）
-   * @param note
-   * @throws IOException
-   */
-  public void save(Note note) throws IOException;
-  public void remove(String noteId) throws IOException;
+  public static void main(String[] args) throws Throwable {
+//    Ignite ignite = Ignition.start("config/ignite.xml");
+    System.setProperty("IGNITE_HOME", "target/classes");
+    String s = "$object$$main$System.out.println(\"ok\");";
+    JavaDynamicCompile.run(s, null, System.out);
+  }
+
 }

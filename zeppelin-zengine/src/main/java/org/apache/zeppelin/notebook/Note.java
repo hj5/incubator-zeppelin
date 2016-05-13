@@ -299,6 +299,10 @@ public class Note implements Serializable, JobListener {
     }
   }
 
+  /**
+   * 持久化该note的所有paragraph到server端
+   * @throws IOException
+   */
   public void persist() throws IOException {
     repo.save(this);
   }

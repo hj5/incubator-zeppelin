@@ -97,7 +97,7 @@ angular.module('zeppelinWebApp').controller('InterpreterCtrl', function($scope, 
   };
 
   $scope.updateInterpreterSetting = function(settingId) {
-    var result = confirm('Do you want to update this interpreter and restart with new settings?');
+    var result = confirm('\u4f60\u786e\u5b9a\u60f3\u8981\u66f4\u65b0\u8fd9\u4e2a\u89e3\u91ca\u5668\u8bbe\u7f6e\u5e76\u91cd\u542f\u8be5\u89e3\u91ca\u5668\u5417\u003f');
     if (!result) {
       return;
     }
@@ -150,7 +150,7 @@ angular.module('zeppelinWebApp').controller('InterpreterCtrl', function($scope, 
   };
 
   $scope.removeInterpreterSetting = function(settingId) {
-    var result = confirm('Do you want to delete this interpreter setting?');
+    var result = confirm('\u4f60\u786e\u5b9a\u60f3\u8981\u5220\u9664\u8fd9\u4e2a\u89e3\u91ca\u5668\u8bbe\u7f6e\u5417\u003f');
     if (!result) {
       return;
     }
@@ -187,7 +187,7 @@ angular.module('zeppelinWebApp').controller('InterpreterCtrl', function($scope, 
   };
 
   $scope.restartInterpreterSetting = function(settingId) {
-    var result = confirm('Do you want to restart this interpreter?');
+    var result = confirm('\u4f60\u786e\u5b9a\u60f3\u8981\u91cd\u542f\u8fd9\u4e2a\u89e3\u91ca\u5668\u8bbe\u7f6e\u5417\u003f');
     if (!result) {
       return;
     }
@@ -210,14 +210,14 @@ angular.module('zeppelinWebApp').controller('InterpreterCtrl', function($scope, 
 
   $scope.addNewInterpreterSetting = function() {
     if (!$scope.newInterpreterSetting.name || !$scope.newInterpreterSetting.group) {
-      alert('Please determine name and interpreter');
+      alert('\u8bf7\u8f93\u5165\u540d\u79f0\u548c\u89e3\u91ca\u5668\u7c7b\u578b');
       return;
     }
 
     for (var i=0; i<$scope.interpreterSettings.length; i++) {
       var setting = $scope.interpreterSettings[i];
       if (setting.name === $scope.newInterpreterSetting.name) {
-        alert('Name ' + setting.name + ' already exists');
+        alert('\u540d\u79f0 ' + setting.name + ' \u5df2\u7ecf\u5b58\u5728');
         return;
       }
     }
@@ -300,7 +300,7 @@ angular.module('zeppelinWebApp').controller('InterpreterCtrl', function($scope, 
 
   var init = function() {
     // when interpreter page opened after seeing non-default looknfeel note, the css remains unchanged. that's what interpreter page want. Force set default looknfeel.
-    $rootScope.$emit('setLookAndFeel', 'default');
+    $rootScope.$emit('setLookAndFeel', ['default','\u9ed8\u8ba4\u6a21\u5f0f']);
     $scope.interpreterSettings = [];
     $scope.availableInterpreters = {};
     $scope.resetNewInterpreterSetting();

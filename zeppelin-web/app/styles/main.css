@@ -47,19 +47,19 @@ body .navbar {
 }
 
 .navbar-inverse {
-  background-color: #3071a9;
+  background-color: #314562;
   color: #fff;
-  border-color: #3071a9;
+  border-color: #314562;
   font-size: 18px;
 }
 
 .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
   color: #fff;
-  background-color: #3071a9;
+  background-color: #314562;
 }
 
 .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
-  background-color: #3071a9;
+  background-color: #314562;
 }
 
 .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {

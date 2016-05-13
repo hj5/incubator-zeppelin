@@ -93,6 +93,10 @@ public class Paragraph extends Job implements Serializable {
     return note;
   }
 
+  /**
+   * 解析Paragraph中client输入的内容，获取对应解释器标记，如：makedown则返回md
+   * @return
+   */
   public String getRequiredReplName() {
     return getRequiredReplName(text);
   }

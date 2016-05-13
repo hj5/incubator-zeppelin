@@ -21,7 +21,6 @@ package org.apache.zeppelin.jdbc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.commons.lang.StringUtils;
-
 import org.apache.zeppelin.interpreter.InterpreterResult;
 import org.apache.zeppelin.interpreter.InterpreterResult.Code;
 
@@ -55,51 +54,58 @@ public class AllDBConnection implements DBConnection {
     this.passwd = passwd;
   }
 
-  Connection allDBConnection;
-  Exception exceptionOnConnect;
-  Statement currentStatement;
-  ResultSet resultSet; 
-
   @Override
   public void open() {
-    try {
-      Class.forName(driver);
-      allDBConnection = DriverManager.getConnection(url, user, passwd);
-    } catch ( ClassNotFoundException | SQLException e ) {
-      logger.error("Can not open connection", e);
-      exceptionOnConnect = e;
-    }
+  }
+
+  public Connection inneropen() throws ClassNotFoundException, SQLException {
+    Class.forName(driver);
+    Connection conn = DriverManager.getConnection(url, user, passwd);
+    return conn;
   }
 
   @Override
   public void close() {
-    try {
-      allDBConnection.close();
-      currentStatement.close();
-      resultSet.close();
-    } catch ( SQLException e ) {
-      logger.error("Can not close connection", e);
-    }
+  }
 
-    allDBConnection = null;
-    exceptionOnConnect = null;
-    currentStatement = null;
-    resultSet = null;
+  public void innerclose(Connection conn, Statement currentStatement, ResultSet resultSet) {
+
+    try {
+      resultSet.close();
+    } catch (SQLException e) {
+      logger.error("Can not close connection", e);
+    } catch (Exception e) {
+      logger.error("close connection error", e);
+    }
+    try {
+      currentStatement.close();
+    } catch (SQLException e) {
+      logger.error("Can not close connection", e);
+    } catch (Exception e) {
+      logger.error("close connection error", e);
+    }
+    try {
+      conn.close();
+    } catch (SQLException e) {
+      logger.error("Can not close connection", e);
+    } catch (Exception e) {
+      logger.error("close connection error", e);
+    }
   }
 
   @Override
   public InterpreterResult executeSql(String sql) {
+    Connection conn = null;
+    Statement currentStatement = null;
+    ResultSet resultSet = null;
     try {
-      if (exceptionOnConnect != null) {
-        return new InterpreterResult(Code.ERROR, exceptionOnConnect.getMessage());
-      }
-      currentStatement = allDBConnection.createStatement();
+      conn = inneropen();
+      currentStatement = conn.createStatement();
       StringBuilder msg = null;
       if (StringUtils.containsIgnoreCase(sql, "EXPLAIN ")) {
-        //return the explain as text, make this visual explain later
+        // return the explain as text, make this visual explain later
         msg = new StringBuilder();
-      }
-      else {
+      } else {
         msg = new StringBuilder("%table ");
       }
       resultSet = currentStatement.executeQuery(sql);
@@ -119,30 +125,29 @@ public class AllDBConnection implements DBConnection {
           }
           msg.append("\n");
         }
-      } catch ( NullPointerException e ) {
-  
+      } catch (NullPointerException e) {
+
       }
 
       InterpreterResult rett = new InterpreterResult(Code.SUCCESS, msg.toString());
       return rett;
-    }
-    catch (SQLException ex) {
+    } catch (Exception ex) {
       logger.error("Can not run " + sql, ex);
       return new InterpreterResult(Code.ERROR, ex.getMessage());
+    } finally {
+      innerclose(conn, currentStatement, resultSet);
     }
   }
 
   @Override
   public void cancel() {
-    if (currentStatement != null) {
-      try {
-        currentStatement.cancel();
-      }
-      catch (SQLException ex) {
-      }
-      finally {
-        currentStatement = null;
-      }
-    }
+    // if (currentStatement != null) {
+    // try {
+    // currentStatement.cancel();
+    // } catch (SQLException ex) {
+    // } finally {
+    // currentStatement = null;
+    // }
+    // }
   }
 }

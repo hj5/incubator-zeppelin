@@ -205,6 +205,7 @@ angular.module('zeppelinWebApp')
       $scope.paragraph.jobName = data.paragraph.jobName;
       $scope.paragraph.title = data.paragraph.title;
       $scope.paragraph.status = data.paragraph.status;
+      $scope.paragraph.statusname = data.paragraph.statusname;
       $scope.paragraph.result = data.paragraph.result;
       $scope.paragraph.settings = data.paragraph.settings;
 
@@ -284,7 +285,7 @@ angular.module('zeppelinWebApp')
   };
 
   $scope.removeParagraph = function() {
-    var result = confirm('Do you want to delete this paragraph?');
+    var result = confirm('\u4f60\u786e\u5b9a\u60f3\u8981\u5220\u9664\u8fd9\u4e2a\u4efb\u52a1\u5417\u003f');
     if (result) {
       console.log('Remove paragraph');
       var paragraphData = {op: 'PARAGRAPH_REMOVE', data: {id: $scope.paragraph.id}};
