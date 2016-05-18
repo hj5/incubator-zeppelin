@@ -345,8 +345,18 @@
   "name": "Rose",
   "id": "2A94M5J1Z",
   "angularObjects": {
-    "2B6FF8NNU": [],
-    "2B67PH63Z": []
+    "2AR1MBBQD:shared_process": [],
+    "2AQ6B6TAZ:shared_process": [],
+    "2AS7W4UQ8:shared_process": [],
+    "2AT92C4G2:shared_process": [],
+    "2ATWCU3DF:shared_process": [],
+    "2ATY6URCM:shared_process": [],
+    "2AT8BJCE5:shared_process": [],
+    "2AQ2JX12K:shared_process": [],
+    "2AQ8FUX6X:shared_process": [],
+    "2ARMPP4EM:shared_process": [],
+    "2ASGJ2NQ6:shared_process": [],
+    "2ARNUFQ9A:shared_process": []
   },
   "config": {
     "looknfeel": "default",

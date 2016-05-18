@@ -478,8 +478,8 @@ angular.module('zeppelinWebApp')
 
   $scope.downloadParagraph = function(){
     var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/text;charset=utf-8,' +      encodeURI($scope.paragraph.result.msg.replace(/\t/g,",")));
-    element.setAttribute('download', "data.csv");
+    element.setAttribute('href', 'data:text/text;charset=utf-8,' + encodeURI($scope.paragraph.result.msg.replace(/\t/g,',')));
+    element.setAttribute('download', 'data.csv');
     element.click();
   };
 
@@ -528,18 +528,10 @@ angular.module('zeppelinWebApp')
   };
 
   $scope.removeParagraph = function() {
-<<<<<<< HEAD:zeppelin-web/app/scripts/controllers/paragraph.js
-    var result = confirm('\u4f60\u786e\u5b9a\u60f3\u8981\u5220\u9664\u8fd9\u4e2a\u4efb\u52a1\u5417\u003f');
-    if (result) {
-      console.log('Remove paragraph');
-      var paragraphData = {op: 'PARAGRAPH_REMOVE', data: {id: $scope.paragraph.id}};
-      $rootScope.$emit('sendNewEvent', paragraphData);
-    }
-=======
     BootstrapDialog.confirm({
       closable: true,
       title: '',
-      message: 'Do you want to delete this paragraph?',
+      message: '\u4f60\u786e\u5b9a\u60f3\u8981\u5220\u9664\u8fd9\u4e2a\u4efb\u52a1\u5417\u003f?',
       callback: function(result) {
         if (result) {
           console.log('Remove paragraph');
@@ -551,7 +543,6 @@ angular.module('zeppelinWebApp')
 
   $scope.clearParagraphOutput = function() {
     websocketMsgSrv.clearParagraphOutput($scope.paragraph.id);
->>>>>>> apache/master:zeppelin-web/src/app/notebook/paragraph/paragraph.controller.js
   };
 
   $scope.toggleEditor = function() {
