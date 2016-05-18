@@ -1,7 +1,5 @@
 #!/bin/bash
 #
-# Copyright 2007 The Apache Software Foundation
-#
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
@@ -21,7 +19,9 @@
 # description: Start and stop daemon script for.
 #
 
-USAGE="Usage: zeppelin-daemon.sh [--config <conf-dir>] {start|stop|restart|reload|status}"
+USAGE="-e Usage: zeppelin-daemon.sh\n\t
+        [--config <conf-dir>] {start|stop|upstart|restart|reload|status}\n\t
+        [--version | -v]"
 
 if [[ "$1" == "--config" ]]; then
   shift
@@ -72,6 +72,9 @@ if [[ -d "${ZEPPELIN_HOME}/zeppelin-server/target/classes" ]]; then
   ZEPPELIN_CLASSPATH+=":${ZEPPELIN_HOME}/zeppelin-server/target/classes"
 fi
 
+# Add jdbc connector jar
+# ZEPPELIN_CLASSPATH+=":${ZEPPELIN_HOME}/jdbc/jars/jdbc-connector-jar"
+
 addJarInDir "${ZEPPELIN_HOME}"
 addJarInDir "${ZEPPELIN_HOME}/lib"
 addJarInDir "${ZEPPELIN_HOME}/zeppelin-interpreter/target/lib"
@@ -95,30 +98,33 @@ function initialize_default_directories() {
     echo "Pid dir doesn't exist, create ${ZEPPELIN_PID_DIR}"
     $(mkdir -p "${ZEPPELIN_PID_DIR}")
   fi
-
-  if [[ ! -d "${ZEPPELIN_NOTEBOOK_DIR}" ]]; then
-    echo "Notebook dir doesn't exist, create ${ZEPPELIN_NOTEBOOK_DIR}"
-    $(mkdir -p "${ZEPPELIN_NOTEBOOK_DIR}")
-  fi
 }
 
 function wait_for_zeppelin_to_die() {
   local pid
   local count
   pid=$1
+  timeout=$2
   count=0
-  while [[ "${count}" -lt 10 ]]; do
+  timeoutTime=$(date "+%s")
+  let "timeoutTime+=$timeout"
+  currentTime=$(date "+%s")
+  forceKill=1
+
+  while [[ $currentTime -lt $timeoutTime ]]; do
     $(kill ${pid} > /dev/null 2> /dev/null)
     if kill -0 ${pid} > /dev/null 2>&1; then
       sleep 3
-      let "count+=1"
     else
+      forceKill=0
       break
     fi
-  if [[ "${count}" == "5" ]]; then
+    currentTime=$(date "+%s")
+  done
+
+  if [[ forceKill -ne 0 ]]; then
     $(kill -9 ${pid} > /dev/null 2> /dev/null)
   fi
-  done
 }
 
 function wait_zeppelin_is_up_for_ci() {
@@ -153,6 +159,16 @@ function check_if_process_is_alive() {
   fi
 }
 
+function upstart() {
+
+  # upstart() allows zeppelin to be run and managed as a service
+  # for example, this could be called from an upstart script in /etc/init
+  # where the service manager starts and stops the process
+  initialize_default_directories
+
+  $ZEPPELIN_RUNNER $JAVA_OPTS -cp $ZEPPELIN_CLASSPATH_OVERRIDES:$CLASSPATH $ZEPPELIN_MAIN >> "${ZEPPELIN_OUTFILE}"
+}
+
 function start() {
   local pid
 
@@ -166,7 +182,7 @@ function start() {
 
   initialize_default_directories
 
-  nohup nice -n $ZEPPELIN_NICENESS $ZEPPELIN_RUNNER $JAVA_OPTS -cp $CLASSPATH $ZEPPELIN_MAIN >> "${ZEPPELIN_OUTFILE}" 2>&1 < /dev/null &
+  nohup nice -n $ZEPPELIN_NICENESS $ZEPPELIN_RUNNER $JAVA_OPTS -cp $ZEPPELIN_CLASSPATH_OVERRIDES:$CLASSPATH $ZEPPELIN_MAIN >> "${ZEPPELIN_OUTFILE}" 2>&1 < /dev/null &
   pid=$!
   if [[ -z "${pid}" ]]; then
     action_msg "${ZEPPELIN_NAME} start" "${SET_ERROR}"
@@ -192,7 +208,7 @@ function stop() {
     if [[ -z "${pid}" ]]; then
       echo "${ZEPPELIN_NAME} is not running"
     else
-      wait_for_zeppelin_to_die $pid
+      wait_for_zeppelin_to_die $pid 40
       $(rm -f ${ZEPPELIN_PID})
       action_msg "${ZEPPELIN_NAME} stop" "${SET_OK}"
     fi
@@ -205,7 +221,7 @@ function stop() {
     fi
 
     pid=$(cat ${f})
-    wait_for_zeppelin_to_die $pid
+    wait_for_zeppelin_to_die $pid 20
     $(rm -f ${f})
   done
 
@@ -235,6 +251,9 @@ case "${1}" in
   stop)
     stop
     ;;
+  upstart)
+    upstart
+    ;;
   reload)
     stop
     start
@@ -245,6 +264,9 @@ case "${1}" in
     ;;
   status)
     find_zeppelin_process
+    ;;
+  -v | --version)
+    getZeppelinVersion
     ;;
   *)
     echo ${USAGE}

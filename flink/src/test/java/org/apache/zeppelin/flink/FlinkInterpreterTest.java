@@ -17,8 +17,10 @@
  */
 package org.apache.zeppelin.flink;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
 import java.util.Properties;
 
 import org.apache.zeppelin.interpreter.InterpreterContext;
@@ -38,7 +40,7 @@ public class FlinkInterpreterTest {
     Properties p = new Properties();
     flink = new FlinkInterpreter(p);
     flink.open();
-    context = new InterpreterContext(null, null, null, null, null, null, null);
+    context = new InterpreterContext(null, null, null, null, null, null, null, null, null, null, null);
   }
 
   @AfterClass
@@ -48,19 +50,48 @@ public class FlinkInterpreterTest {
   }
 
   @Test
+  public void testNextLineInvocation() {
+    assertEquals(InterpreterResult.Code.SUCCESS, flink.interpret("\"123\"\n.toInt", context).code());
+  }
+
+  @Test
+  public void testNextLineComments() {
+    assertEquals(InterpreterResult.Code.SUCCESS, flink.interpret("\"123\"\n/*comment here\n*/.toInt", context).code());
+  }
+
+  @Test
+  public void testNextLineCompanionObject() {
+    String code = "class Counter {\nvar value: Long = 0\n}\n // comment\n\n object Counter {\n def apply(x: Long) = new Counter()\n}";
+    assertEquals(InterpreterResult.Code.SUCCESS, flink.interpret(code, context).code());
+  }
+
+  @Test
   public void testSimpleStatement() {
     InterpreterResult result = flink.interpret("val a=1", context);
     result = flink.interpret("print(a)", context);
     assertEquals("1", result.message());
   }
 
+  @Test
+  public void testSimpleStatementWithSystemOutput() {
+    InterpreterResult result = flink.interpret("val a=1", context);
+    result = flink.interpret("System.out.print(a)", context);
+    assertEquals("1", result.message());
+  }
 
   @Test
   public void testWordCount() {
     flink.interpret("val text = env.fromElements(\"To be or not to be\")", context);
     flink.interpret("val counts = text.flatMap { _.toLowerCase.split(\" \") }.map { (_, 1) }.groupBy(0).sum(1)", context);
-    flink.interpret("counts.print()", context);
-    InterpreterResult result = flink.interpret("env.execute(\"WordCount Example\")", context);
+    InterpreterResult result = flink.interpret("counts.print()", context);
     assertEquals(Code.SUCCESS, result.code());
+
+    String[] expectedCounts = {"(to,2)", "(be,2)", "(or,1)", "(not,1)"};
+    Arrays.sort(expectedCounts);
+
+    String[] counts = result.message().split("\n");
+    Arrays.sort(counts);
+
+    assertArrayEquals(expectedCounts, counts);
   }
 }

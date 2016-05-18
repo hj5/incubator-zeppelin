@@ -33,7 +33,6 @@
       <useAllReactorProjects>true</useAllReactorProjects> -->
       <!-- Now, select which projects to include in this module-set. -->
       <includes>
-        <include>org.apache.zeppelin:zeppelin-api-ui</include>
         <include>org.apache.zeppelin:zeppelin-server</include>
         <include>org.apache.zeppelin:zeppelin-web</include>
       </includes>
@@ -45,7 +44,6 @@
       <useProjectArtifact>false</useProjectArtifact>
       <excludes>
         <exclude>${project.groupId}:zeppelin-web</exclude>
-        <exclude>${project.groupId}:zeppelin-api-ui</exclude>
         <exclude>${project.groupId}:zeppelin-server</exclude>
       </excludes>
     </dependencySet>
@@ -57,6 +55,8 @@
       <includes>
         <include>README.md</include>
         <include>LICENSE*</include>
+        <include>NOTICE</include>
+        <include>DISCLAIMER</include>
       </includes>
     </fileSet>
     <fileSet>
@@ -65,7 +65,16 @@
       <fileMode>0755</fileMode>
     </fileSet>
     <fileSet>
+      <directory>../licenses</directory>
+    </fileSet>
+    <fileSet>
       <directory>../conf</directory>
+      <excludes>
+        <exclude>interpreter.json</exclude>
+        <exclude>zeppelin-env.cmd</exclude>
+        <exclude>zeppelin-env.sh</exclude>
+        <exclude>zeppelin-site.xml</exclude>
+      </excludes>
     </fileSet>
     <fileSet>
       <directory>../interpreter</directory>

@@ -17,27 +17,22 @@
 
 package org.apache.zeppelin.rest;
 
+import org.apache.zeppelin.server.JsonResponse;
+import org.apache.zeppelin.util.Util;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
-import com.wordnik.swagger.annotations.Api;
-
 /**
  * Zeppelin root rest api endpoint.
  *
- * @author anthonycorbacho
  * @since 0.3.4
  */
 @Path("/")
-@Api(value = "/", description = "Zeppelin REST API root")
 public class ZeppelinRestApi {
 
-  /**
-   * Required by Swagger.
-   */
   public ZeppelinRestApi() {
-    super();
   }
 
   /**
@@ -48,5 +43,11 @@ public class ZeppelinRestApi {
   @GET
   public Response getRoot() {
     return Response.ok().build();
+  }
+
+  @GET
+  @Path("version")
+  public Response getVersion() {
+    return new JsonResponse<>(Response.Status.OK, "Zeppelin version", Util.getVersion()).build();
   }
 }

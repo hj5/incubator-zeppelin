@@ -52,10 +52,12 @@ class AbstractFunctionalSuite extends FunSuite with WebBrowser with BeforeAndAft
 
   override def afterAll() = {
     "../bin/zeppelin-daemon.sh stop" !
+
+    webDriver.close()
   }
 
   def getDriver(): WebDriver = {
-    val possibleDrivers = List[() => WebDriver](safary, chrome, firefox)
+    val possibleDrivers = List[() => WebDriver](safari, chrome, firefox)
     val createdDriver = possibleDrivers.map(driverFactory => Try(driverFactory.apply())).find(_.isSuccess)
     createdDriver match {
       case Some(driver) => driver.get
@@ -63,7 +65,7 @@ class AbstractFunctionalSuite extends FunSuite with WebBrowser with BeforeAndAft
     }
   }
 
-  def safary(): WebDriver = {
+  def safari(): WebDriver = {
     new SafariDriver()
   }
 

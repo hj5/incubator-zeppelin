@@ -23,15 +23,14 @@ import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.zeppelin.interpreter.Interpreter;
-import org.apache.zeppelin.interpreter.InterpreterSerializer;
+import org.apache.zeppelin.interpreter.InterpreterInfoSerializer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.zeppelin.interpreter.InterpreterSetting;
 
 /**
  * Json response builder.
- *
- * @author Leemoonsoo
  *
  * @param <T>
  */
@@ -100,11 +99,13 @@ public class JsonResponse<T> {
 
   @Override
   public String toString() {
-    GsonBuilder gsonBuilder = new GsonBuilder()
-      .registerTypeAdapter(Interpreter.class, new InterpreterSerializer());
+    GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(
+        InterpreterSetting.InterpreterInfo.class,
+        new InterpreterInfoSerializer());
     if (pretty) {
       gsonBuilder.setPrettyPrinting();
     }
+    gsonBuilder.setExclusionStrategies(new JsonExclusionStrategy());
     Gson gson = gsonBuilder.create();
     return gson.toJson(this);
   }

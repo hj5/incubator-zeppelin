@@ -17,7 +17,13 @@
 
 package org.apache.zeppelin.server;
 
+import org.apache.zeppelin.conf.ZeppelinConfiguration;
+import org.apache.zeppelin.utils.SecurityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -37,24 +43,37 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CorsFilter implements Filter {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(CorsFilter.class);
+
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
       throws IOException, ServletException {
+    String sourceHost = ((HttpServletRequest) request).getHeader("Origin");
+    String origin = "";
+
+    try {
+      if (SecurityUtils.isValidOrigin(sourceHost, ZeppelinConfiguration.create())) {
+        origin = sourceHost;
+      }
+    } catch (URISyntaxException e) {
+      LOGGER.error("Exception in WebDriverManager while getWebDriver ", e);
+    }
+
     if (((HttpServletRequest) request).getMethod().equals("OPTIONS")) {
       HttpServletResponse resp = ((HttpServletResponse) response);
-      addCorsHeaders(resp);
+      addCorsHeaders(resp, origin);
       return;
     }
 
     if (response instanceof HttpServletResponse) {
       HttpServletResponse alteredResponse = ((HttpServletResponse) response);
-      addCorsHeaders(alteredResponse);
+      addCorsHeaders(alteredResponse, origin);
     }
     filterChain.doFilter(request, response);
   }
 
-  private void addCorsHeaders(HttpServletResponse response) {
-    response.addHeader("Access-Control-Allow-Origin", "*");
+  private void addCorsHeaders(HttpServletResponse response, String origin) {
+    response.addHeader("Access-Control-Allow-Origin", origin);
     response.addHeader("Access-Control-Allow-Credentials", "true");
     response.addHeader("Access-Control-Allow-Headers", "authorization,Content-Type");
     response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, HEAD, DELETE");

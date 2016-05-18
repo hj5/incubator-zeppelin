@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-import org.apache.zeppelin.interpreter.InterpreterResult;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +37,6 @@ import org.slf4j.LoggerFactory;
  *  and saving/loading jobs from disk.
  *  Changing/adding/deleting non transitive field name need consideration of that.
  *
- *  @author Leemoonsoo
  */
 public abstract class Job {
   /**
@@ -58,15 +57,15 @@ public abstract class Job {
     FINISHED,
     ERROR,
     ABORT;
-    boolean isReady() {
+    public boolean isReady() {
       return this == READY;
     }
 
-    boolean isRunning() {
+    public boolean isRunning() {
       return this == RUNNING;
     }
 
-    boolean isPending() {
+    public boolean isPending() {
       return this == PENDING;
     }
   }
@@ -78,6 +77,8 @@ public abstract class Job {
   Date dateStarted;
   Date dateFinished;
   Status status;
+
+  static Logger LOGGER = LoggerFactory.getLogger(Job.class);
 
   transient boolean aborted = false;
 
@@ -102,11 +103,16 @@ public abstract class Job {
     this(jobName, listener, JobProgressPoller.DEFAULT_INTERVAL_MSEC);
   }
 
+  public Job(String jobId, String jobName, JobListener listener) {
+    this(jobId, jobName, listener, JobProgressPoller.DEFAULT_INTERVAL_MSEC);
+  }
+
   public Job(String jobId, String jobName, JobListener listener, long progressUpdateIntervalMs) {
     this.jobName = jobName;
     this.listener = listener;
     this.progressUpdateIntervalMs = progressUpdateIntervalMs;
 
+    dateCreated = new Date();
     id = jobId;
 
     setStatus(Status.READY);
@@ -173,14 +179,14 @@ public abstract class Job {
       dateFinished = new Date();
       progressUpdator.terminate();
     } catch (NullPointerException e) {
-      logger().error("Job failed", e);
+      LOGGER.error("Job failed", e);
       progressUpdator.terminate();
       this.exception = e;
       result = e.getMessage();
       errorMessage = getStack(e);
       dateFinished = new Date();
     } catch (Throwable e) {
-      logger().error("Job failed", e);
+      LOGGER.error("Job failed", e);
       progressUpdator.terminate();
       this.exception = e;
       result = e.getMessage();
@@ -191,17 +197,13 @@ public abstract class Job {
     }
   }
 
-  public String getStack(Throwable e) {
-    StackTraceElement[] stacks = e.getStackTrace();
-    if (stacks == null) {
+  public static String getStack(Throwable e) {
+    if (e == null) {
       return "";
     }
-    String ss = "";
-    for (StackTraceElement s : stacks) {
-      ss += s.toString() + "\n";
-    }
 
-    return ss;
+    Throwable cause = ExceptionUtils.getRootCause(e);
+    return ExceptionUtils.getFullStackTrace(cause);
   }
 
   public Throwable getException() {
@@ -251,10 +253,6 @@ public abstract class Job {
 
   public Date getDateFinished() {
     return dateFinished;
-  }
-
-  private Logger logger() {
-    return LoggerFactory.getLogger(Job.class);
   }
 
   protected void setResult(Object result) {
